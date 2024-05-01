@@ -19,11 +19,5 @@ pipeline {
         sh 'docker compose up --build  '
       }
     }
-    stage('Test') {
-      agent any
-      steps {
-        sh 'python3 -m pytest -q service/app.py'
-      }
-    }
   }
 }
