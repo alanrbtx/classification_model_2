@@ -13,3 +13,4 @@ scipy==1.11.1
 numpy==1.26.2
 flask
 pytest
+redis
