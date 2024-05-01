@@ -43,8 +43,10 @@ def get_real_result():
     load_dotenv()
 
     password = os.getenv('PASS')
-    r = redis.Redis(host='host.docker.internal',
-                    port=6379,
+    host = os.getenv('HOST')
+    port = os.getenv('PORT')
+    r = redis.Redis(host=host,
+                    port=port,
                     db=0,
                     password=password)
     
