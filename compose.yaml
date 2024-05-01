@@ -18,6 +18,14 @@ services:
       - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161:/classification
       - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/data:/dataset
 
+  db:
+   image: redis/redis-stack:latest
+
+  
+   command: redis-server --requirepass "test"  --protected-mode yes
+
+   ports:
+      - '6379:6379'
 
     # labels:
     #             project.git: "https://github.com/vendor/users.git"    # ссылка на репозиторий
@@ -34,7 +42,7 @@ services:
 #       db:
 #         condition: service_healthy
 #   db:
-#     image: postgres
+#    image: redis/redis-stack:latest
 #     restart: always
 #     user: postgres
 #     secrets:
