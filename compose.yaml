@@ -12,11 +12,14 @@ services:
     build:
       context: .
     ports:
-      - 8000:8000
+      - '8000:8000'
 
     volumes:
       - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/experiments/exp_25177033897488245161:/classification
       - /Users/a.gazzaev/Desktop/BIG-DATA/lab1/classification_model/data:/dataset
+
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   db:
    image: redis/redis-stack:latest
