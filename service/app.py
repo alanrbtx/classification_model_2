@@ -4,6 +4,9 @@ from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
 import redis
+import os
+import os
+from dotenv import load_dotenv
 
 pkl_path = '/classification/neigh.pkl'
 def load_pickle(file_path):
@@ -37,10 +40,14 @@ def get_test_result():
 def get_real_result():
     res = predict_image(request.files["media"])
 
+
+    load_dotenv()
+
+    password = os.getenv('PASS')
     r = redis.Redis(host='host.docker.internal',
                     port=6379,
                     db=0,
-                    password="test")
+                    password=password)
     
     r.set(request.remote_addr, f"prediction: {res}")
 
