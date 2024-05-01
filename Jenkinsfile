@@ -16,7 +16,13 @@ pipeline {
     stage('Deployment') {
       agent any
       steps {
-        sh 'docker compose up --build  '
+        sh 'docker compose up --build'
+      }
+    }
+    stage('Test') {
+      agent any
+      steps {
+        sh 'python3 tests/test_api.py'
       }
     }
   }
