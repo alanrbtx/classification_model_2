@@ -39,8 +39,7 @@ def get_test_result():
 @app.route('/get_real_prediction', methods=['POST'])
 def get_real_result():
     res = predict_image(request.files["media"])
-
-
+    
     load_dotenv()
 
     password = os.getenv('PASS')
