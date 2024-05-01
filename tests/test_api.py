@@ -1,6 +1,6 @@
 import requests
 
-res = requests.get("http://host.docker.internal:8000/get_test_prediction")
+res = requests.get("host.docker.internal:8000/get_test_prediction")
 res.json().get("result")
 print("--------------------------------")
 print("TEST ENDPOINT RESULT: ",  res)
