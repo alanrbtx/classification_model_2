@@ -3,6 +3,7 @@ import pickle
 from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
+import redis
 
 pkl_path = '/classification/neigh.pkl'
 def load_pickle(file_path):
@@ -35,6 +36,19 @@ def get_test_result():
 @app.route('/get_real_prediction', methods=['POST'])
 def get_real_result():
     res = predict_image(request.files["media"])
+
+    r = redis.Redis(host='host.docker.internal',
+                    port=6379,
+                    db=0,
+                    password="test")
+    
+    r.set(request.remote_addr, f"prediction: {res}")
+
+    keys = r.keys()
+    for key in keys:
+        print(f"key: {key}", f"value: {r.get(key)}")
+        print(10*"---")
+
     return res
 
 
