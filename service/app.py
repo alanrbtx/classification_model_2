@@ -66,7 +66,8 @@ def get_real_result():
     for key in keys:
         print(f"key: {key}", f"value: {r.get(key)}")
         print(10*"---")
-
+        
+    return res
 
 class TestClass():
     def test_load_picke(self):
