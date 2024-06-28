@@ -42,6 +42,11 @@ def predict_image(file_path):
 app = Flask(__name__)
 
 @app.route('/get_test_prediction', methods=['GET'])
+def get_test_result():
+    res = predict_image("../data/PetImages/Cat/3004.jpg")
+    return res
+
+@app.route('/get_real_prediction', methods=['POST'])
 def get_real_result():
     res = predict_image(request.files["media"])
 
