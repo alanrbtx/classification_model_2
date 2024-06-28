@@ -7,6 +7,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import redis
+from db import Database
 
 load_dotenv()
 
@@ -52,20 +53,26 @@ def get_real_result():
 
     load_dotenv()
 
+    # password = os.getenv('PASS')
+    # host = os.getenv('HOST')
+    # port = os.getenv('PORT')
+    # r = redis.Redis(host=host,
+    #                 port=port,
+    #                 db=0,
+    #                 password=password)
+    
+    # r.set(request.remote_addr, f"prediction: {res}")
+
+    # keys = r.keys()
+    # for key in keys:
+    #     print(f"key: {key}", f"value: {r.get(key)}")
+    #     print(10*"---")
     password = os.getenv('PASS')
     host = os.getenv('HOST')
     port = os.getenv('PORT')
-    r = redis.Redis(host=host,
-                    port=port,
-                    db=0,
-                    password=password)
-    
-    r.set(request.remote_addr, f"prediction: {res}")
 
-    keys = r.keys()
-    for key in keys:
-        print(f"key: {key}", f"value: {r.get(key)}")
-        print(10*"---")
+    db = Database(password, host, port)
+    db.connect(res, request)
         
     return res
 
