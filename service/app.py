@@ -62,11 +62,6 @@ def get_real_result():
         print(f"key: {key}", f"value: {r.get(key)}")
         print(10*"---")
 
-@app.route('/get_real_prediction', methods=['POST'])
-def get_real_result():
-    res = predict_image(request.files["media"])
-    return res
-
 
 class TestClass():
     def test_load_picke(self):
