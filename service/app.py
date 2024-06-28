@@ -3,14 +3,22 @@ import pickle
 from skimage import io
 from skimage.transform import resize
 from skimage.color import rgb2gray
-import redis
-import os
-import os
+import logging
 from dotenv import load_dotenv
+import os
+import redis
+
+load_dotenv()
+
+host_model = os.getenv("HOST_EXPERIMENTS_PATH")
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 pkl_path = '/classification/neigh.pkl'
 def load_pickle(file_path):
     neigh = pickle.load(open(file_path, 'rb'))
+    logger.info("Модель успешно загружена из %s", file_path)
     return neigh
 
 def predict_image(file_path):
@@ -24,19 +32,16 @@ def predict_image(file_path):
     res = neigh.predict(image)[0]
     if res == 0:
         print("MODEL PREDICTION: CAT")
+        logger.info("Модель предсказала CAT")
         return {"result": "cat"}
     else:
         print("MODEL PREDICTION: DOG")
+        logger.info("Модель предсказала DOG")
         return {"result": "dog"}
 
 app = Flask(__name__)
 
 @app.route('/get_test_prediction', methods=['GET'])
-def get_test_result():
-    res = predict_image("/dataset/PetImages/Cat/3004.jpg")
-    return res
-
-@app.route('/get_real_prediction', methods=['POST'])
 def get_real_result():
     res = predict_image(request.files["media"])
 
@@ -57,15 +62,15 @@ def get_real_result():
         print(f"key: {key}", f"value: {r.get(key)}")
         print(10*"---")
 
+@app.route('/get_real_prediction', methods=['POST'])
+def get_real_result():
+    res = predict_image(request.files["media"])
     return res
 
 
 class TestClass():
     def test_load_picke(self):
-        assert load_pickle('/classification/neigh.pkl')
-
-    def test_predict(self):
-        assert predict_image('/dataset/PetImages/Cat/3004.jpg')
+        assert load_pickle(f'{host_model}/neigh.pkl')
 
     
 if __name__ == '__main__':
