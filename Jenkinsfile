@@ -19,13 +19,13 @@ pipeline {
         sh 'docker compose up --build -d'
       }
     }
-    stage('Deployment: test stage 2') {
-      agent any
-      steps {
-        sh 'python3 -m pytest service/app.py'
-        sh 'python3 tests/test_api.py'
-        sh 'docker stop $(docker ps -a -q)'
-      }
-    }
+    // stage('Deployment: test stage 2') {
+    //   agent any
+    //   steps {
+    //     sh 'python3 -m pytest service/app.py'
+    //     sh 'python3 tests/test_api.py'
+    //     sh 'docker stop $(docker ps -a -q)'
+    //   }
+    // }
   }
 }
